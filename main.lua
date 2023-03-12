@@ -3,8 +3,8 @@
     Course:     GD50 2018
     Proyect:    Pong Remake
 
-    Version:    pong-1
-    ""
+    Version:    pong-2
+    "Paddles & font"
 
     -- Main Program --
 
@@ -45,6 +45,13 @@ function love.load ()
     -- and graphics; try removing this function to see the difference!
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
+    -- more "retro-looking" font object we can use for any text. Each size or variant must be
+    -- defined/initialized as a different variable.
+    smallFont = love.graphics.newFont('font.ttf', 8)
+
+    -- set LÖVE2D's active font to the smallFont obect
+    love.graphics.setFont(smallFont)
+
     -- initialize virtual resolution, it will be render within the actual window no matter its
     -- dimensions; replaces the love.window.setMode call from the previous version.
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
@@ -68,8 +75,23 @@ function love.draw ()
     -- begin rendering at virtual resolution
     push:apply('start')
 
+    -- clear the screen with a specific color; in this case, a color similar
+    -- to some versions of the original Pong
+    love.graphics.clear(40/255, 45/255, 52/255, 255/255)
+
     -- condense versione (one line) from the last version, but now using the virtual resolution
     love.graphics.printf('Welcom to Pong!', 0, VIRTUAL_HEIGHT / 2 - 6, VIRTUAL_WIDTH, 'center')
+
+    -- paddles are simply rectangles we draw on the screen at certain points, as is the ball
+
+    -- render first paddle (left side)
+    love.graphics.rectangle('fill', 10, 30, 5, 20)
+
+    -- render second paddle (right side)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 50, 5, 20)
+
+    -- render ball (center)
+    love.graphics.rectangle('fill', VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
 
     -- end rendering at virtual resolution
     push:apply('end')
